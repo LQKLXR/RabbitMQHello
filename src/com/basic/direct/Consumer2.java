@@ -1,4 +1,4 @@
-package com.direct;
+package com.basic.direct;
 
 import com.rabbitmq.client.*;
 

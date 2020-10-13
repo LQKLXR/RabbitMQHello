@@ -1,4 +1,4 @@
-package com.workqueue;
+package com.basic.fanout;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeoutException;
 
 public class Producer {
 
-    private static final String QUEUE_NAME = "HELLO";
+    private static final String EXCHANGE_NAME = "FANOUT_EXCHANGE";
 
     public static void produce() throws IOException, TimeoutException {
         // 获得连接工厂
@@ -21,20 +21,18 @@ public class Producer {
         Connection connection = connectionFactory.newConnection();
         // 获得信道
         Channel channel = connection.createChannel();
-        // 声明一个队列
-        channel.queueDeclare(QUEUE_NAME,false,false,false,null);
-        // 放入50个message
+        // 声明一个 交换机
+        channel.exchangeDeclare(EXCHANGE_NAME,"fanout");
+
         String message = "Hello World!";
-        for (int i = 0; i < 50; i++) {
-            channel.basicPublish("",QUEUE_NAME,null,(message + i).getBytes());
-            // 输出这个message
-            System.out.println("生产者成功放入" + message + i);
-        }
+        // 向交换机发送一个消息（交换机名称，路由key，属性，消息Byte数组）
+        channel.basicPublish(EXCHANGE_NAME,"",null,message.getBytes());
+        System.out.println("生产者生产: " + message);
         channel.close();
         connection.close();
     }
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        com.workqueue.Producer.produce();
+       com.basic.fanout.Producer.produce();
     }
 }

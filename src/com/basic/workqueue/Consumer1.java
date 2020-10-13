@@ -1,10 +1,15 @@
-package com.workqueue;
+package com.basic.workqueue;
 
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * 探究默认交换机下的多消费者消费情况
+ * preFetchCount
+ * autoAck
+ */
 public class Consumer1 {
 
     private static final String QUEUE_NAME = "HELLO";
@@ -34,6 +39,6 @@ public class Consumer1 {
         channel.basicConsume(QUEUE_NAME, false, deliverCallback, (CancelCallback) null);
     }
     public static void main(String[] args) throws IOException, TimeoutException {
-        com.workqueue.Consumer1.consume();
+        com.basic.workqueue.Consumer1.consume();
     }
 }

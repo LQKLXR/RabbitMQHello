@@ -1,10 +1,13 @@
-package com.hello;
+package com.basic.hello;
 
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * 默认交换机下的直连模式-消费者
+ */
 public class Consumer {
 
     private static final String QUEUE_NAME = "HELLO";
