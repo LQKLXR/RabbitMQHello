@@ -57,9 +57,9 @@ public class ProducerConfirm {
             channel.basicPublish(exchange_name, "confirm", null, ("正常数据" + i).getBytes());
         }
         // 再push几个routingKey不存在的数据
-        for (int i = 0; i < 10; i++) {
-            channel.basicPublish(exchange_name, "notFound", false, null, ("不正常数据" + i).getBytes());
-        }
+
+        channel.basicPublish(exchange_name, "notFound", true, null, "不正常数据".getBytes());
+
 
         /*channel.close();
         connection.close();*/
